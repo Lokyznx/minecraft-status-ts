@@ -1,0 +1,23 @@
+{
+  "name": "minecraft-query-ts",
+  "version": "1.0.0",
+  "description": "Lib para consultar servidores Minecraft Java, escrita em TypeScript",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "minecraft",
+    "minecraft-server",
+    "minecraft-query",
+    "typescript"
+  ],
+  "author": "Taylon",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.0.1",
+    "typescript": "^5.8.3"
+  }
+}
