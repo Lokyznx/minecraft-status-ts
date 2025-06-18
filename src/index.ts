@@ -76,7 +76,7 @@ export async function consultarServidorJava(
     socket.setTimeout(timeout);
 
     socket.connect(port, host, () => {
-      const protocolVersion = 765; // Protocolo Minecraft 1.20.4
+      const protocolVersion = 770; // Protocolo Minecraft 1.20.4
       const hostBuffer = Buffer.from(host, 'utf8');
       const portBuffer = Buffer.alloc(2);
       portBuffer.writeUInt16BE(port, 0);
