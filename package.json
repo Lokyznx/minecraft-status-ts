@@ -8,7 +8,7 @@
   "build": "tsc",
   "prepublishOnly": "npm run build",
   "test": "tsc && node dist/test.js"
-  }
+  },
   "keywords": [
     "minecraft",
     "minecraft-server",
