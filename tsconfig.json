@@ -1,16 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2016",             // JS compatível com Node (já suave)
-    "module": "commonjs",           // padrão Node, pra importar/exportar sem estresse
-    "rootDir": "./src",             // onde tá seu TS
-    "outDir": "./dist",             // onde vai o JS compilado
-    "strict": true,                 // segurança total, nada de gambiarra
-    "esModuleInterop": true,        // para importar CommonJS numa boa
-    "forceConsistentCasingInFileNames": true, // case sensitive pra evitar bugs bizarros
-    "skipLibCheck": true,           // não compila tipo de libs, agiliza compilação
-    "lib": ["ES2017"],              // suporte a recursos modernos do JS tipo async/await
-    "resolveJsonModule": true,      // se quiser importar JSON direto (muito útil)
-    "declaration": true             // gera arquivos .d.ts pra sua lib ficar firme no npm
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "declaration": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
