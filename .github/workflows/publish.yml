@@ -17,7 +17,7 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org/'
 
-      - run: npm ci # mais seguro que 'install' em CI/CD
+      - run: npm install # mais seguro que 'install' em CI/CD
 
       # 🔥 Checa se a versão já existe no NPM
       - name: Check if version already exists
