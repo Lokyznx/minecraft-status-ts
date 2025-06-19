@@ -31,7 +31,7 @@ async function checkBedrockServer() {
   try {
     // Usamos um servidor público conhecido para teste: Lifeboat Survival Games
     const status = await queryBedrockServer(
-      'pe.lbsg.net',
+      'play.cubecraft.net',
       19132,
       { timeout: 3000 }
     );
