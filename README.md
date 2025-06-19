@@ -12,7 +12,7 @@
 ## 🚀 Installation
 
 ```bash
-npm install minecraft-query
+npm install @minecraft/server-info
 ```
 
 ---
