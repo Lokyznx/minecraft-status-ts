@@ -1,13 +1,6 @@
-# 🟩 minecraft-status-ts
+# minecraft-status-ts
 
 > A TypeScript library to query the status of **Minecraft Java Edition** and **Minecraft Bedrock Edition** servers — simple, fast, and fully typed.
-
-![NPM Version](https://img.shields.io/npm/v/minecraft-status-ts?style=for-the-badge&logo=npm)  
-![NPM Downloads](https://img.shields.io/npm/dm/minecraft-status-ts?style=for-the-badge&color=blue)  
-![License](https://img.shields.io/npm/l/minecraft-status-ts?style=for-the-badge&color=green)  
-![Typed](https://img.shields.io/npm/types/minecraft-status-ts?style=for-the-badge)
-
----
 
 ## 🚀 Installation
 
