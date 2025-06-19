@@ -1,12 +1,11 @@
-
-# 🟩 minecraft-query
+# 🟩 @minecraft/server-info
 
 > A TypeScript library to query the status of **Minecraft Java Edition** and **Minecraft Bedrock Edition** servers — simple, fast, and fully typed.
 
-![NPM Version](https://img.shields.io/npm/v/minecraft-query-ts?style=for-the-badge&logo=npm)
-![NPM Downloads](https://img.shields.io/npm/dm/minecraft-query-ts?style=for-the-badge&color=blue)
-![License](https://img.shields.io/npm/l/minecraft-query-ts?style=for-the-badge&color=green)
-![Typed](https://img.shields.io/npm/types/minecraft-query-ts?style=for-the-badge)
+![NPM Version](https://img.shields.io/npm/v/@minecraft/server-info?style=for-the-badge&logo=npm)
+![NPM Downloads](https://img.shields.io/npm/dm/@minecraft/server-info?style=for-the-badge&color=blue)
+![License](https://img.shields.io/npm/l/@minecraft/server-info?style=for-the-badge&color=green)
+![Typed](https://img.shields.io/npm/types/@minecraft/server-info?style=for-the-badge)
 
 ---
 
@@ -29,8 +28,8 @@ This library allows you to fetch information from any Minecraft server — both 
 ### 🔗 Querying a **Java Edition** server
 
 ```ts
-import { queryJavaServer } from 'minecraft-query-ts';
-import type { JavaServerStatus } from 'minecraft-query-ts';
+import { queryJavaServer } from '@minecraft/server-info';
+import type { JavaServerStatus } from '@minecraft/server-info';
 
 async function checkJava() {
   try {
@@ -49,8 +48,8 @@ checkJava();
 ### 📱 Querying a **Bedrock Edition** server
 
 ```ts
-import { queryBedrockServer } from 'minecraft-query-ts';
-import type { BedrockServerStatus } from 'minecraft-query-ts';
+import { queryBedrockServer } from '@minecraft/server-info';
+import type { BedrockServerStatus } from '@minecraft/server-info';
 
 async function checkBedrock() {
   try {
@@ -170,7 +169,7 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more infor
 
 ## 🌍 Links
 
-- 🔗 [NPM](https://www.npmjs.com/package/minecraft-query-ts)
-- 🔗 [GitHub Repository](https://github.com/Lokyznx/minecraft-query-ts) <!-- Replace with your repo URL -->
+- 🔗 [NPM](https://www.npmjs.com/package/@minecraft/server-info)
+- 🔗 [GitHub Repository](https://github.com/Lokyznx/@minecraft/server-info) <!-- Replace with your repo URL -->
 
 ---
