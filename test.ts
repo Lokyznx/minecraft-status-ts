@@ -5,7 +5,7 @@ async function checkJavaServer() {
   console.log('--- Checking Java Server (mc.sparklypower.net) ---');
   try {
     const status = await queryJavaServer(
-      'mc.sparklypower.net', 
+      'play.cubecraft.net', 
       25565,
       { timeout: 3000 }
     );
