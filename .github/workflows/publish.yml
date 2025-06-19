@@ -3,7 +3,7 @@ name: Publish to npm
 on:
   push:
     branches:
-      - main # ou 'master', depende do teu repo
+      - main
 
 jobs:
   publish:
@@ -17,8 +17,27 @@ jobs:
           node-version: '20'
           registry-url: 'https://registry.npmjs.org/'
 
-      - run: npm install
+      - run: npm ci # mais seguro que 'install' em CI/CD
 
-      - run: npm publish
+      # 🔥 Checa se a versão já existe no NPM
+      - name: Check if version already exists
+        id: check-version
+        run: |
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          if npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version > /dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 🔥 Publica só se NÃO existir
+      - name: Publish to NPM
+        if: steps.check-version.outputs.exists == 'false'
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Skip publish (version already exists)
+        if: steps.check-version.outputs.exists == 'true'
+        run: echo "📦 Version already published, skipping..."
