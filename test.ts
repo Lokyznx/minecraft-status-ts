@@ -3,7 +3,7 @@ import { consultarServidorJava } from './src/index';
 async function checarServidor() {
   try {
     const status = await consultarServidorJava(
-      'mc.hypixel.net',
+      'mc.sparklypower.net',
       25565,
       {
         timeout: 3000,
