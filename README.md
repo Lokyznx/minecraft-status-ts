@@ -169,7 +169,7 @@ Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more infor
 
 ## 🌍 Links
 
-- 🔗 [NPM](https://www.npmjs.com/package/@minecraft/server-info)
-- 🔗 [GitHub Repository](https://github.com/Lokyznx/@minecraft/server-info) <!-- Replace with your repo URL -->
+- 🔗 [NPM](https://www.npmjs.com/package/minecraft-status-ts)
+- 🔗 [GitHub Repository](https://github.com/Lokyznx/minecraft-status-ts) <!-- Replace with your repo URL -->
 
 ---
