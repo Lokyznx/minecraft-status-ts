@@ -11,7 +11,9 @@ async function checkJavaServer() {
     );
 
     if (status.online) {
+      // ATUALIZAÇÃO: Adicionando a descrição (MOTD) para padronizar a saída
       console.log(`✅ Server Online! Ping: ${status.latency}ms`);
+      console.log(`   Descrição (MOTD): ${status.description}`);
       console.log(`   Version: ${status.version}`);
       console.log(`   Players: ${status.playersOnline}/${status.playersMax}`);
     } else {
@@ -27,9 +29,8 @@ async function checkJavaServer() {
 }
 
 async function checkBedrockServer() {
-  console.log('\n--- Checking Bedrock Server (pe.lbsg.net) ---');
+  console.log('\n--- Checking Bedrock Server (play.cubecraft.net) ---');
   try {
-    // Usamos um servidor público conhecido para teste: Lifeboat Survival Games
     const status = await queryBedrockServer(
       'play.cubecraft.net',
       19132,
