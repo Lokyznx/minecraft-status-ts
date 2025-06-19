@@ -1,44 +1,93 @@
 
-# 🧠 Minecraft Server Query Utility
+# 🟩 minecraft-query-ts
 
-A simple and modern utility to query the status of **Minecraft: Java Edition** and **Bedrock Edition** servers.
+> A TypeScript library to query the status of **Minecraft Java Edition** and **Minecraft Bedrock Edition** servers — simple, fast, and fully typed.
 
-## ✨ Features
-
-- ✅ Supports both Java and Bedrock editions.
-- ✅ Written in TypeScript with fully typed definitions.
-- ✅ Promise-based — perfect for async/await usage.
-- ✅ Zero production dependencies — clean and lightweight.
-
-## 🚀 Usage
-
-The package exports two main functions:
-
-- `queryJavaServer`
-- `queryBedrockServer`
+![NPM Version](https://img.shields.io/npm/v/minecraft-query-ts?style=for-the-badge&logo=npm)
+![NPM Downloads](https://img.shields.io/npm/dm/minecraft-query-ts?style=for-the-badge&color=blue)
+![License](https://img.shields.io/npm/l/minecraft-query-ts?style=for-the-badge&color=green)
+![Typed](https://img.shields.io/npm/types/minecraft-query-ts?style=for-the-badge)
 
 ---
 
-## 🧱 Java Edition
+## 🚀 Installation
 
-### 🔍 Query Example
+```bash
+npm install minecraft-query-ts
+```
+
+---
+
+## 🎯 Purpose
+
+This library allows you to fetch information from any Minecraft server — both **Java Edition** and **Bedrock Edition** — directly from your Node + TypeScript applications, bots, APIs, or any backend service.
+
+---
+
+## 💻 Usage
+
+### 🔗 Querying a **Java Edition** server
 
 ```ts
-import { queryJavaServer } from './src/protocols/java/queryJavaServer';
+import { queryJavaServer } from 'minecraft-query-ts';
+import type { JavaServerStatus } from 'minecraft-query-ts';
 
 async function checkJava() {
   try {
-    const status = await queryJavaServer('mc.hypixel.net', 25565, { timeout: 5000 });
+    const status: JavaServerStatus = await queryJavaServer('mc.hypixel.net');
     console.log(status);
   } catch (error) {
-    console.error('Query failed:', error);
+    console.error('Failed to query server:', error);
   }
 }
 
 checkJava();
 ```
 
-### 📦 Return (`JavaServerStatus`)
+---
+
+### 📱 Querying a **Bedrock Edition** server
+
+```ts
+import { queryBedrockServer } from 'minecraft-query-ts';
+import type { BedrockServerStatus } from 'minecraft-query-ts';
+
+async function checkBedrock() {
+  try {
+    const status: BedrockServerStatus = await queryBedrockServer('play.cubecraft.net');
+    console.log(status);
+  } catch (error) {
+    console.error('Failed to query server:', error);
+  }
+}
+
+checkBedrock();
+```
+
+---
+
+## 🔍 API
+
+### 🧠 `queryJavaServer(host, port?, options?)`
+
+Query a **Minecraft Java Edition** server.
+
+| Parameter | Type    | Required | Default | Description                                |
+|-----------|---------|----------|---------|--------------------------------------------|
+| `host`    | string  | ✅       | -       | Server address (IP or domain)              |
+| `port`    | number  | ❌       | 25565   | Server port                                |
+| `options` | object  | ❌       | -       | Optional settings like timeout, protocol   |
+
+**Options:**
+
+```ts
+{
+  timeout?: number;         // Timeout in ms (default: 5000)
+  protocolVersion?: number; // Protocol version (default: 770)
+}
+```
+
+**Returns:** `Promise<JavaServerStatus>`
 
 ```ts
 {
@@ -48,34 +97,33 @@ checkJava();
   version?: string;
   playersOnline?: number;
   playersMax?: number;
-  description?: string; // Server's Message of the Day (MOTD)
-  favicon?: string | null; // Base64 encoded favicon
-  latency?: number; // Latency in milliseconds
+  description?: string;     // Server MOTD
+  favicon?: string | null;  // Favicon as Base64
+  latency?: number;         // Latency in ms
 }
 ```
 
 ---
 
-## 📱 Bedrock Edition
+### 📱 `queryBedrockServer(host, port?, options?)`
 
-### 🔍 Query Example
+Query a **Minecraft Bedrock Edition** server.
+
+| Parameter | Type    | Required | Default | Description                              |
+|-----------|---------|----------|---------|------------------------------------------|
+| `host`    | string  | ✅       | -       | Server address (IP or domain)            |
+| `port`    | number  | ❌       | 19132   | Server port                              |
+| `options` | object  | ❌       | -       | Optional settings like timeout           |
+
+**Options:**
 
 ```ts
-import { queryBedrockServer } from './src/protocols/bedrock/queryBedrockServer';
-
-async function checkBedrock() {
-  try {
-    const status = await queryBedrockServer('play.cubecraft.net', 19132, { timeout: 5000 });
-    console.log(status);
-  } catch (error) {
-    console.error('Query failed:', error);
-  }
+{
+  timeout?: number; // Timeout in ms (default: 5000)
 }
-
-checkBedrock();
 ```
 
-### 📦 Return (`BedrockServerStatus`)
+**Returns:** `Promise<BedrockServerStatus>`
 
 ```ts
 {
@@ -90,12 +138,39 @@ checkBedrock();
   playersMax?: number;
   serverId?: string;
   gameMode?: string;
-  latency?: number; // Latency in milliseconds
+  latency?: number; // Latency in ms
 }
 ```
 
 ---
 
-## 🏗️ License
+## 🏆 Features
 
-This project is open-source. Feel free to use, improve, and share it. 🚀
+- ✔️ Fully supports Java Edition and Bedrock Edition
+- ✔️ 100% written in TypeScript with complete type definitions
+- ✔️ Simple, clean API
+- ✔️ No heavy dependencies
+- ✔️ Lightweight and high performance
+
+---
+
+## 🔧 Tech Stack
+
+- Node.js
+- TypeScript
+- ESModules
+
+---
+
+## 📜 License
+
+Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more information.
+
+---
+
+## 🌍 Links
+
+- 🔗 [NPM](https://www.npmjs.com/package/minecraft-query-ts)
+- 🔗 [GitHub Repository](https://github.com/Lokyznx/minecraft-query-ts) <!-- Replace with your repo URL -->
+
+---
