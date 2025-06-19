@@ -1,13 +1,13 @@
 {
-  "name": "minecraft-query-ts",
+  "name": "minecraft-query",
   "version": "1.0.0",
-  "description": "Lib para consultar servidores Minecraft Java, escrita em TypeScript",
+  "description": "A simple TypeScript library to query Minecraft Java and Bedrock servers status",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-  "build": "tsc",
-  "prepublishOnly": "npm run build",
-  "test": "tsc && node dist/test.js"
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build && node dist/test.js"
   },
   "keywords": [
     "minecraft",
@@ -17,6 +17,17 @@
   ],
   "author": "Taylon",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lokyznx/minecraft-query.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Lokyznx/minecraft-query/issues"
+  },
+  "homepage": "https://github.com/Lokyznx/minecraft-query#readme",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/node": "^24.0.1",
     "typescript": "^5.8.3"
