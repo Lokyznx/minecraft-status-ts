@@ -6,7 +6,8 @@ export interface JavaServerStatus {
   playersOnline?: number;
   playersMax?: number;
   description?: string;
-  favicon?: string | null;
+  favicon?: string | null;         // O favicon original em Base64 (string)
+  faviconBuffer?: Buffer | null;   // NOVO: O favicon já como Buffer
   latency?: number;
 }
 
