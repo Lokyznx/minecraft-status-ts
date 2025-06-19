@@ -1,5 +1,5 @@
 {
-  "name": "minecraft-query",
+  "name": "@minecraft/server-info",
   "version": "1.0.0",
   "description": "A simple TypeScript library to query Minecraft Java and Bedrock servers status",
   "main": "dist/index.js",
@@ -19,12 +19,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lokyznx/minecraft-query.git"
+    "url": "git+https://github.com/Lokyznx/@minecraft/server-info.git"
   },
   "bugs": {
-    "url": "https://github.com/Lokyznx/minecraft-query/issues"
+    "url": "https://github.com/Lokyznx/@minecraft/server-info/issues"
   },
-  "homepage": "https://github.com/Lokyznx/minecraft-query#readme",
+  "homepage": "https://github.com/Lokyznx/@minecraft/server-info#readme",
   "files": [
     "dist"
   ],
