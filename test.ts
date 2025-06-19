@@ -7,7 +7,7 @@ async function checkServer() {
       25565,
       {
         timeout: 3000,
-        protocolVersion: 765,
+        protocolVersion: 770,
       }
     );
 
