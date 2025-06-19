@@ -1,8 +1,8 @@
-import { consultarServidorJava } from './src/index';
+import { queryJavaServer } from './src/protocols/java/queryJavaServer';
 
-async function checarServidor() {
+async function checkServer() {
   try {
-    const status = await consultarServidorJava(
+    const status = await queryJavaServer(
       'mc.sparklypower.net',
       25565,
       {
@@ -12,19 +12,19 @@ async function checarServidor() {
     );
 
     if (status.online) {
-      console.log(`✅ Servidor Online! Ping: ${status.latencia}ms`);
-      console.log(`Versão: ${status.versao}`);
-      console.log(`Jogadores: ${status.jogadoresOnline}/${status.jogadoresMax}`);
+      console.log(`✅ Server Online! Ping: ${status.latency}ms`);
+      console.log(`Version: ${status.version}`);
+      console.log(`Players: ${status.playersOnline}/${status.playersMax}`);
     } else {
-      console.log('❌ Servidor offline.');
+      console.log('❌ Server offline.');
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error(`🔥 Falha na consulta: ${error.message}`);
+      console.error(`🔥 Query failed: ${error.message}`);
     } else {
-      console.error('🔥 Falha na consulta: Erro desconhecido', error);
+      console.error('🔥 Query failed: Unknown error', error);
     }
   }
 }
 
-checarServidor();
+checkServer();
