@@ -1,5 +1,5 @@
 
-# 🟩 minecraft-query-ts
+# 🟩 minecraft-query
 
 > A TypeScript library to query the status of **Minecraft Java Edition** and **Minecraft Bedrock Edition** servers — simple, fast, and fully typed.
 
