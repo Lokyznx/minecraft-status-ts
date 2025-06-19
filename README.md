@@ -13,7 +13,7 @@
 ## 🚀 Installation
 
 ```bash
-npm install minecraft-query-ts
+npm install minecraft-query
 ```
 
 ---
