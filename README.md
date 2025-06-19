@@ -1,121 +1,101 @@
 
-# minecraft-query-ts
+# 🧠 Minecraft Server Query Utility
 
-[![npm version](https://img.shields.io/npm/v/minecraft-query-ts.svg)](https://www.npmjs.com/package/minecraft-query-ts)  
-[![Downloads](https://img.shields.io/npm/dm/minecraft-query-ts.svg)](https://www.npmjs.com/package/minecraft-query-ts)  
-[![License](https://img.shields.io/npm/l/minecraft-query-ts.svg)](https://opensource.org/licenses/MIT)  
-[![TypeScript](https://img.shields.io/badge/TypeScript-%3E%3D5.8-blue.svg)](https://www.typescriptlang.org/)  
-[![Node.js](https://img.shields.io/badge/Node.js-%3E%3D16-green.svg)](https://nodejs.org/)
+A simple and modern utility to query the status of **Minecraft: Java Edition** and **Bedrock Edition** servers.
 
----
+## ✨ Features
 
-## 📦 About
+- ✅ Supports both Java and Bedrock editions.
+- ✅ Written in TypeScript with fully typed definitions.
+- ✅ Promise-based — perfect for async/await usage.
+- ✅ Zero production dependencies — clean and lightweight.
 
-**minecraft-query-ts** is a lightweight and reliable TypeScript library for querying Minecraft Java Edition servers using the native Query protocol. Built with strong typing and modern TypeScript features, it ensures safety and scalability for backend applications and CLI tools.
+## 🚀 Usage
 
----
+The package exports two main functions:
 
-## 🚀 Features
-
-- Simple and direct connection to Minecraft servers  
-- Fully typed responses with server details  
-- Robust error handling with clear messages  
-- Supports Node.js >= 16 and TypeScript >= 5.8  
-- Easy integration into any backend or CLI project  
+- `queryJavaServer`
+- `queryBedrockServer`
 
 ---
 
-## ⚙️ Installation
+## 🧱 Java Edition
 
-```bash
-npm install minecraft-query-ts
-```
-
-or
-
-```bash
-yarn add minecraft-query-ts
-```
-
----
-
-## 🛠️ Basic Usage
+### 🔍 Query Example
 
 ```ts
-import { queryJavaServer } from 'minecraft-query-ts';
+import { queryJavaServer } from './src/protocols/java/queryJavaServer';
 
-async function main() {
+async function checkJava() {
   try {
-    const status = await queryJavaServer('mc.hypixel.net', 25565, { timeout: 3000 });
-    if (status.online) {
-      console.log(`✅ Server is online! Ping: ${status.latency}ms`);
-      console.log(`Version: ${status.version}`);
-      console.log(`Players: ${status.playersOnline}/${status.playersMax}`);
-    } else {
-      console.log('❌ Server is offline.');
-    }
+    const status = await queryJavaServer('mc.hypixel.net', 25565, { timeout: 5000 });
+    console.log(status);
   } catch (error) {
-    console.error('🔥 Query failed:', error);
+    console.error('Query failed:', error);
   }
 }
 
-main();
+checkJava();
+```
+
+### 📦 Return (`JavaServerStatus`)
+
+```ts
+{
+  online: boolean;
+  host: string;
+  port: number;
+  version?: string;
+  playersOnline?: number;
+  playersMax?: number;
+  description?: string; // Server's Message of the Day (MOTD)
+  favicon?: string | null; // Base64 encoded favicon
+  latency?: number; // Latency in milliseconds
+}
 ```
 
 ---
 
-## 📄 API
+## 📱 Bedrock Edition
 
-`queryJavaServer(host: string, port?: number, options?: { timeout?: number; protocolVersion?: number }): Promise<ServerStatus>`
+### 🔍 Query Example
 
-Queries a Minecraft Java Edition server for status information.
+```ts
+import { queryBedrockServer } from './src/protocols/bedrock/queryBedrockServer';
 
-| Parameter | Type | Description |
-| --- | --- | --- |
-| host | string | Server IP address or hostname |
-| port | number (optional, default: 25565) | Server port |
-| options | object (optional) | Additional options |
-| options.timeout | number (optional, default: 5000) | Connection timeout in milliseconds |
-| options.protocolVersion | number (optional, default: 770) | Minecraft protocol version |
+async function checkBedrock() {
+  try {
+    const status = await queryBedrockServer('play.cubecraft.net', 19132, { timeout: 5000 });
+    console.log(status);
+  } catch (error) {
+    console.error('Query failed:', error);
+  }
+}
 
----
+checkBedrock();
+```
 
-### ServerStatus Interface
+### 📦 Return (`BedrockServerStatus`)
 
-| Property | Type | Description |
-| --- | --- | --- |
-| online | boolean | Whether server is online |
-| host | string | Hostname or IP |
-| port | number | Server port |
-| version | string (optional) | Minecraft server version |
-| playersOnline | number (optional) | Number of online players |
-| playersMax | number (optional) | Maximum players allowed |
-| description | string (optional) | Server MOTD |
-| favicon | string or null (optional) | Server favicon (base64) |
-| latency | number (optional) | Ping latency in milliseconds |
-
----
-
-## 🧪 Testing
-
-Run the tests with:
-
-```bash
-npm run test
+```ts
+{
+  online: boolean;
+  host: string;
+  port: number;
+  edition?: string;
+  motd?: string;
+  version?: string;
+  protocol?: number;
+  playersOnline?: number;
+  playersMax?: number;
+  serverId?: string;
+  gameMode?: string;
+  latency?: number; // Latency in milliseconds
+}
 ```
 
 ---
 
-## 🤝 Contributing
+## 🏗️ License
 
-Contributions are welcome! Feel free to open issues or pull requests.
-
----
-
-## 📝 License
-
-MIT © Taylon
-
----
-
-Built with 💙 by Taylon
+This project is open-source. Feel free to use, improve, and share it. 🚀
