@@ -16,22 +16,30 @@ export async function queryJavaServer(
 ): Promise<JavaServerStatus> {
   const { timeout = 5000, protocolVersion = 770 } = options;
 
-  if (typeof host !== 'string' || !host.length) {
-    throw new MinecraftQueryError('Invalid host');
-  }
-  if (typeof port !== 'number' || port <= 0 || port > 65535) {
-    throw new MinecraftQueryError('Invalid port');
-  }
-
   return new Promise<JavaServerStatus>((resolve, reject) => {
     const socket = new net.Socket();
     let errored = false;
     let responseBuffer = Buffer.alloc(0);
-
     let partialStatus: Omit<JavaServerStatus, 'latency' | 'online'> | null = null;
     let pingSentAt: bigint | null = null;
 
-    socket.setTimeout(timeout);
+    const cleanup = () => { if (!socket.destroyed) socket.destroy(); };
+
+    socket.setTimeout(timeout, () => {
+      errored = true;
+      cleanup();
+      reject(new MinecraftQueryError('Connection timeout'));
+    });
+
+    socket.on('error', (err) => {
+      errored = true;
+      cleanup();
+      reject(new MinecraftQueryError('Connection error: ' + err.message));
+    });
+
+    socket.on('close', () => {
+      if (!errored && !partialStatus) resolve({ online: false, host, port });
+    });
 
     socket.connect(port, host, () => {
       const hostBuffer = Buffer.from(host, 'utf8');
@@ -55,102 +63,64 @@ export async function queryJavaServer(
       responseBuffer = Buffer.concat([responseBuffer, data]);
       try {
         if (!partialStatus) {
-          const { value: packetLength, size: lengthSize } = readVarInt(responseBuffer);
-          if (responseBuffer.length < packetLength + lengthSize) return;
+          const varIntResult = readVarInt(responseBuffer);
+          const packetLength = varIntResult.value;
+          if (responseBuffer.length < packetLength + varIntResult.size) return;
 
-          const packetData = responseBuffer.slice(lengthSize, lengthSize + packetLength);
-          const { value: packetID, size: idSize } = readVarInt(packetData);
+          const packetData = responseBuffer.slice(varIntResult.size, varIntResult.size + packetLength);
+          const packetIdResult = readVarInt(packetData);
 
-          if (packetID === 0x00) {
-            const { value: stringLength, size: strLenSize } = readVarInt(packetData, idSize);
+          if (packetIdResult.value === 0x00) {
+            const jsonStrResult = readVarInt(packetData, packetIdResult.size);
+            const jsonStart = packetIdResult.size + jsonStrResult.size;
+            const jsonString = packetData.slice(jsonStart).toString('utf8');
+            const json: MinecraftJavaStatusResponse = JSON.parse(jsonString);
 
-            const jsonStart = idSize + strLenSize;
-            const jsonEnd = jsonStart + stringLength;
-            if (packetData.length < jsonEnd) {
-              throw new MinecraftQueryError('Incomplete status packet');
-            }
-
-            const jsonString = packetData.slice(jsonStart, jsonEnd).toString('utf8');
-
-            let json: MinecraftJavaStatusResponse;
-            try {
-              json = JSON.parse(jsonString) as MinecraftJavaStatusResponse;
-            } catch {
-              throw new MinecraftQueryError('Invalid JSON response');
-            }
-
-            if (!json.version?.name || !json.players) {
-              throw new MinecraftQueryError('Malformed server response');
+            // ALTERAÇÃO AQUI: Converte o favicon para Buffer
+            let faviconBuffer: Buffer | null = null;
+            if (json.favicon) {
+              const base64Data = json.favicon.replace(/^data:image\/png;base64,/, '');
+              faviconBuffer = Buffer.from(base64Data, 'base64');
             }
 
             partialStatus = {
-              host,
-              port,
+              host, port,
               version: json.version.name,
               playersOnline: json.players.online,
               playersMax: json.players.max,
               description: parseDescription(json.description),
-              favicon: json.favicon || null
+              favicon: json.favicon || null,
+              faviconBuffer: faviconBuffer
             };
 
             pingSentAt = process.hrtime.bigint();
             const pingPayload = Buffer.alloc(8);
             pingPayload.writeBigInt64BE(pingSentAt, 0);
-
             socket.write(createPacket(Buffer.concat([Buffer.from([0x01]), pingPayload])));
-
-            responseBuffer = responseBuffer.slice(lengthSize + packetLength);
+            responseBuffer = responseBuffer.slice(varIntResult.size + packetLength);
           }
         }
 
         if (partialStatus && responseBuffer.length > 0) {
-          const { value: packetLength, size: lengthSize } = readVarInt(responseBuffer);
-          if (responseBuffer.length < packetLength + lengthSize) return;
+          const varIntResult = readVarInt(responseBuffer);
+          if (responseBuffer.length < varIntResult.value + varIntResult.size) return;
 
-          const packetData = responseBuffer.slice(lengthSize, lengthSize + packetLength);
-          const { value: packetID } = readVarInt(packetData);
-
-          if (packetID === 0x01) {
-            if (packetData.length < 9) {
-              throw new MinecraftQueryError('Invalid Pong packet');
-            }
-
+          const packetData = responseBuffer.slice(varIntResult.size, varIntResult.size + varIntResult.value);
+          if (readVarInt(packetData).value === 0x01) {
             const pongPayload = packetData.readBigInt64BE(1);
             if (pingSentAt === pongPayload) {
               const latencyNs = process.hrtime.bigint() - pingSentAt;
-              const latencyMs = Number(latencyNs / 1000000n);
-
-              resolve({ ...partialStatus, online: true, latency: latencyMs });
-              socket.end();
+              resolve({ ...partialStatus, online: true, latency: Number(latencyNs / 1000000n) });
+              cleanup();
             }
           }
-
-          responseBuffer = responseBuffer.slice(lengthSize + packetLength);
         }
       } catch (err: any) {
         if (err.message.includes('Insufficient buffer')) return;
         errored = true;
-        socket.destroy();
+        cleanup();
         reject(err instanceof MinecraftQueryError ? err : new MinecraftQueryError(err.message));
       }
     });
-
-    socket.on('error', (err) => {
-      errored = true;
-      socket.destroy();
-      reject(new MinecraftQueryError('Connection error: ' + err.message));
-    });
-
-    socket.on('timeout', () => {
-      errored = true;
-      socket.destroy();
-      reject(new MinecraftQueryError('Connection timeout'));
-    });
-
-    socket.on('close', () => {
-      if (!errored && !partialStatus) {
-        resolve({ online: false, host, port });
-      }
-    });
   });
-        }
+}
