@@ -1,18 +1,18 @@
-# 🟩 @minecraft/server-info
+# 🟩 minecraft/server-info
 
 > A TypeScript library to query the status of **Minecraft Java Edition** and **Minecraft Bedrock Edition** servers — simple, fast, and fully typed.
 
-![NPM Version](https://img.shields.io/npm/v/@minecraft/server-info?style=for-the-badge&logo=npm)
-![NPM Downloads](https://img.shields.io/npm/dm/@minecraft/server-info?style=for-the-badge&color=blue)
-![License](https://img.shields.io/npm/l/@minecraft/server-info?style=for-the-badge&color=green)
-![Typed](https://img.shields.io/npm/types/@minecraft/server-info?style=for-the-badge)
+![NPM Version](https://img.shields.io/npm/v/minecraft/server-info?style=for-the-badge&logo=npm)
+![NPM Downloads](https://img.shields.io/npm/dm/minecraft/server-info?style=for-the-badge&color=blue)
+![License](https://img.shields.io/npm/l/minecraft/server-info?style=for-the-badge&color=green)
+![Typed](https://img.shields.io/npm/types/minecraft/server-info?style=for-the-badge)
 
 ---
 
 ## 🚀 Installation
 
 ```bash
-npm install @minecraft/server-info
+npm install minecraft/server-info
 ```
 
 ---
@@ -28,8 +28,8 @@ This library allows you to fetch information from any Minecraft server — both 
 ### 🔗 Querying a **Java Edition** server
 
 ```ts
-import { queryJavaServer } from '@minecraft/server-info';
-import type { JavaServerStatus } from '@minecraft/server-info';
+import { queryJavaServer } from 'minecraft/server-info';
+import type { JavaServerStatus } from 'minecraft/server-info';
 
 async function checkJava() {
   try {
@@ -48,8 +48,8 @@ checkJava();
 ### 📱 Querying a **Bedrock Edition** server
 
 ```ts
-import { queryBedrockServer } from '@minecraft/server-info';
-import type { BedrockServerStatus } from '@minecraft/server-info';
+import { queryBedrockServer } from 'minecraft/server-info';
+import type { BedrockServerStatus } from 'minecraft/server-info';
 
 async function checkBedrock() {
   try {
